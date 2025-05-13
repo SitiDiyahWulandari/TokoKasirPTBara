@@ -5,7 +5,7 @@
 @section('content')
 <style>
     /* Kartu Utama */
-    .sales-card {
+    .history-card {
         border-radius: 10px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         border: none;
@@ -13,7 +13,7 @@
     }
     
     /* Header Kartu */
-    .sales-card .card-header {
+    .history-card .card-header {
         background-color: #4e73df;
         color: white;
         padding: 1.25rem 1.5rem;
@@ -23,24 +23,10 @@
         align-items: center;
     }
     
-    .sales-card .card-header h5 {
+    .history-card .card-header h2 {
         font-weight: 600;
         margin: 0;
-        font-size: 1.25rem;
-    }
-    
-    /* Tombol */
-    .btn-primary {
-        background-color: #4e73df;
-        border-color: #4e73df;
-        font-weight: 500;
-        transition: all 0.3s ease;
-    }
-    
-    .btn-primary:hover {
-        background-color: #3a5bc7;
-        border-color: #3a5bc7;
-        transform: translateY(-1px);
+        font-size: 1.5rem;
     }
     
     /* Tabel Responsif */
@@ -52,6 +38,8 @@
     /* Gaya Tabel */
     .table {
         margin-bottom: 0;
+        border-collapse: separate;
+        border-spacing: 0;
     }
     
     .table thead th {
@@ -78,7 +66,22 @@
         background-color: rgba(78, 115, 223, 0.1);
     }
     
-    /* Tombol Kecil */
+    /* Tombol */
+    .btn-info {
+        background-color: #36b9cc;
+        border-color: #36b9cc;
+        color: white;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-info:hover {
+        background-color: #2c9faf;
+        border-color: #2a96a5;
+        color: white;
+        transform: translateY(-1px);
+    }
+    
     .btn-sm {
         padding: 0.35rem 0.75rem;
         font-size: 0.875rem;
@@ -86,66 +89,67 @@
         font-weight: 500;
     }
     
-    /* Tombol Info */
-    .btn-info {
-        background-color: #36b9cc;
-        border-color: #36b9cc;
-        color: white;
-    }
-    
-    .btn-info:hover {
-        background-color: #2c9faf;
-        border-color: #2a96a5;
-        color: white;
-    }
-    
-    /* Format Harga */
+    /* Format Teks Khusus */
     .price {
         font-family: 'Courier New', monospace;
         font-weight: 600;
     }
     
-    /* Format Tanggal */
     .date {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         color: #5a5c69;
     }
     
-    /* Kode Transaksi */
-    .transaction-code {
+    .transaction-id {
         font-weight: 600;
         color: #4e73df;
     }
+    
+    /* Border Radius untuk Tabel */
+    .table-bordered {
+        border: 1px solid #e3e6f0;
+    }
+    
+    .table-bordered thead th:first-child {
+        border-top-left-radius: 8px;
+    }
+    
+    .table-bordered thead th:last-child {
+        border-top-right-radius: 8px;
+    }
+    
+    .table-bordered tbody tr:last-child td:first-child {
+        border-bottom-left-radius: 8px;
+    }
+    
+    .table-bordered tbody tr:last-child td:last-child {
+        border-bottom-right-radius: 8px;
+    }
 </style>
 
-<div class="card sales-card">
+<div class="card history-card">
     <div class="card-header">
-        <h5>Riwayat Penjualan</h5>
-        <a href="{{ route('sales.create') }}" class="btn btn-primary">
-            <i class="fas fa-cash-register"></i> Buat Transaksi
-        </a>
+        <h2>Riwayat Penjualan</h2>
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Kode Transaksi</th>
+                        <th>ID Transaksi</th>
                         <th>Tanggal</th>
-                        <th>Total</th>
+                        <th>Total Transaksi</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($sales as $sale)
+                    @foreach ($sales as $sale)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td class="transaction-code">{{ $sale->transaction_code }}</td>
-                        <td class="date">{{ $sale->created_at->format('d/m/Y H:i') }}</td>
-                        <td class="price">Rp {{ number_format($sale->total, 0, ',', '.') }}</td>
+                        <td class="transaction-id">{{ $sale->id }}</td>
+                        <td class="date">{{ $sale->created_at->format('d M Y H:i') }}</td>
+                        <td class="price">Rp {{ number_format($sale->total, 2, ',', '.') }}</td>
                         <td>
-                            <a href="{{ route('sales.show', $sale->id) }}" class="btn btn-sm btn-info">
+                            <a href="{{ route('history.show', $sale->id) }}" class="btn btn-info btn-sm">
                                 <i class="fas fa-eye"></i> Detail
                             </a>
                         </td>

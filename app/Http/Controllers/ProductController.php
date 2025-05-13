@@ -33,7 +33,7 @@ class ProductController extends Controller
         $data['user_id'] = Auth::id();
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('products', 'public');
+            $imagePath = $request->file('image')->store('gambar_products', 'public');
             $data['image'] = $imagePath;
         }
 
@@ -44,19 +44,27 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        $this->authorize('view', $product);
+        if ($product->user_id !== Auth::id()) {
+            abort(403, 'Akses ditolak.');
+        }
+
         return view('products.show', compact('product'));
     }
 
     public function edit(Product $product)
     {
-        $this->authorize('update', $product);
+        if ($product->user_id !== Auth::id()) {
+            abort(403, 'Akses ditolak.');
+        }
+
         return view('products.edit', compact('product'));
     }
 
     public function update(Request $request, Product $product)
     {
-        $this->authorize('update', $product);
+        if ($product->user_id !== Auth::id()) {
+            abort(403, 'Akses ditolak.');
+        }
 
         $request->validate([
             'name' => 'required',
@@ -68,12 +76,11 @@ class ProductController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('image')) {
-            // Delete old image if exists
             if ($product->image) {
                 Storage::disk('public')->delete($product->image);
             }
-            
-            $imagePath = $request->file('image')->store('products', 'public');
+
+            $imagePath = $request->file('image')->store('gambar_products', 'public');
             $data['image'] = $imagePath;
         }
 
@@ -84,14 +91,16 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        $this->authorize('delete', $product);
-        
+        if ($product->user_id !== Auth::id()) {
+            abort(403, 'Akses ditolak.');
+        }
+
         if ($product->image) {
             Storage::disk('public')->delete($product->image);
         }
-        
+
         $product->delete();
-        
+
         return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus');
     }
 }

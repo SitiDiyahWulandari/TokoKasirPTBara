@@ -74,13 +74,11 @@ class SaleController extends Controller
 
     public function show(Sale $sale)
     {
-        $this->authorize('view', $sale);
         return view('sales.show', compact('sale'));
     }
 
     public function print(Sale $sale)
     {
-        $this->authorize('view', $sale);
         return view('sales.print', compact('sale'));
     }
 }

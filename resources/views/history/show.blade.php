@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Detail Penjualan')
+@section('title', 'Detail Riwayat Penjualan')
 
 @section('content')
 <style>
     /* Kartu Utama */
-    .sale-detail-card {
+    .history-detail-card {
         border-radius: 10px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         border: none;
@@ -13,21 +13,21 @@
     }
     
     /* Header Kartu */
-    .sale-detail-card .card-header {
+    .history-detail-card .card-header {
         background-color: #4e73df;
         color: white;
         padding: 1.25rem 1.5rem;
         border-bottom: none;
     }
     
-    .sale-detail-card .card-header h5 {
+    .history-detail-card .card-header h5 {
         font-weight: 600;
         margin: 0;
         font-size: 1.25rem;
     }
     
     /* Body Kartu */
-    .sale-detail-card .card-body {
+    .history-detail-card .card-body {
         padding: 2rem;
     }
     
@@ -148,9 +148,9 @@
     }
 </style>
 
-<div class="card sale-detail-card">
+<div class="card history-detail-card">
     <div class="card-header">
-        <h5>Detail Transaksi</h5>
+        <h5>Detail Riwayat Transaksi</h5>
     </div>
     <div class="card-body">
         <div class="transaction-info">
@@ -198,8 +198,8 @@
         </div>
         
         <div class="action-buttons">
-            <a href="{{ route('sales.index') }}" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Kembali
+            <a href="{{ route('history.index') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Kembali ke Riwayat
             </a>
         </div>
     </div>

@@ -17,7 +17,7 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="bg-white p-6 rounded-lg shadow border-l-4 border-primary-500">
             <h3 class="text-lg font-medium text-gray-500">Total Produk</h3>
-            <p class="text-3xl font-bold mt-2">125</p>
+            <p class="text-3xl font-bold mt-2">7</p>
         </div>
     </div>
 @endsection

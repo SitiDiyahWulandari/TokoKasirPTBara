@@ -16,7 +16,6 @@ class HistoryController extends Controller
 
     public function show(Sale $sale)
     {
-        $this->authorize('view', $sale);
         return view('history.show', compact('sale'));
     }
 }
